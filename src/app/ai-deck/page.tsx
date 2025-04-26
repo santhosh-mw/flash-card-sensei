@@ -17,6 +17,10 @@ export default function AiDeckPage() {
   const router = useRouter();
   const prompt = searchParams.get("prompt") || "";
   const numCards = Number(searchParams.get("numCards")) || 5;
+  const cardType = searchParams.get("cardType") || 'multiple-choice';
+  const difficulty = searchParams.get("difficulty") || 'easy';
+  const language = searchParams.get("language") || 'english';
+  const category = searchParams.get("category") || '';
   const [cards, setCards] = useState<FlashcardType[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -39,7 +43,7 @@ export default function AiDeckPage() {
     fetch("/api/generate-cards", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt, numCards }),
+      body: JSON.stringify({ prompt, numCards, cardType, difficulty, language, category }),
     })
       .then((res) => res.json())
       .then((data) => {
