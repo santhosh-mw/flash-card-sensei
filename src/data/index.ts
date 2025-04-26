@@ -20,7 +20,7 @@ interface ApiResponse {
 let decksCache: FlashcardDeck[] | null = null;
 
 const getBaseUrl = () => {
-  // During build time, we should use the absolute URL
+  // For production Vercel deployment
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
@@ -30,8 +30,8 @@ const getBaseUrl = () => {
     return `http://localhost:${process.env.PORT || 3000}`;
   }
 
-  // Fallback to relative URL for client-side requests
-  return '';
+  // For client-side requests in production
+  return window.location.origin;
 };
 
 export const getAllDecks = async (): Promise<FlashcardDeck[]> => {
@@ -41,7 +41,7 @@ export const getAllDecks = async (): Promise<FlashcardDeck[]> => {
 
   try {
     const response = await fetch(`${getBaseUrl()}/api/decks`, {
-      cache: 'no-store' // Disable caching to ensure fresh data
+      cache: 'no-store'
     });
 
     if (!response.ok) {

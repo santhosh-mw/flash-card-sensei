@@ -54,6 +54,9 @@ const parseFlashcards = (content: string): Flashcard[] | null => {
   }
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const decks: FlashcardDeck[] = [];
@@ -99,20 +102,27 @@ export async function GET() {
     }
 
     // Always return a JSON response, even if no decks are found
-    return NextResponse.json({
+    return new Response(JSON.stringify({
       success: true,
       data: decks,
       count: decks.length
+    }), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
   } catch (error) {
     console.error('Error loading decks:', error);
-    return NextResponse.json({
+    return new Response(JSON.stringify({
       success: false,
       error: 'Failed to load decks',
       details: error instanceof Error ? error.message : 'Unknown error'
-    }, { 
-      status: 500 
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
   }
 } 
