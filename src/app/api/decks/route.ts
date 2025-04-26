@@ -98,16 +98,21 @@ export async function GET() {
       }
     }
 
-    if (decks.length === 0) {
-      return NextResponse.json({ error: 'No decks found' }, { status: 404 });
-    }
+    // Always return a JSON response, even if no decks are found
+    return NextResponse.json({
+      success: true,
+      data: decks,
+      count: decks.length
+    });
 
-    return NextResponse.json(decks);
   } catch (error) {
     console.error('Error loading decks:', error);
-    return NextResponse.json(
-      { error: 'Failed to load decks', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      success: false,
+      error: 'Failed to load decks',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { 
+      status: 500 
+    });
   }
 } 

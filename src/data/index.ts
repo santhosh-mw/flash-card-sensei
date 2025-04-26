@@ -9,6 +9,14 @@ export interface FlashcardDeck {
   category: string;
 }
 
+interface ApiResponse {
+  success: boolean;
+  data?: FlashcardDeck[];
+  error?: string;
+  details?: string;
+  count?: number;
+}
+
 let decksCache: FlashcardDeck[] | null = null;
 
 const getBaseUrl = () => {
@@ -33,27 +41,28 @@ export const getAllDecks = async (): Promise<FlashcardDeck[]> => {
 
   try {
     const response = await fetch(`${getBaseUrl()}/api/decks`, {
-      next: { revalidate: 0 } // Disable caching for now to debug
+      cache: 'no-store' // Disable caching to ensure fresh data
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      console.error('API Error:', error);
-      throw new Error(error.error || 'Failed to fetch decks');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const decks = await response.json();
+    const result: ApiResponse = await response.json();
     
-    if (!Array.isArray(decks)) {
-      console.error('Invalid response format:', decks);
-      throw new Error('Invalid deck data received');
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to fetch decks');
     }
 
-    decksCache = decks;
-    return decks;
+    if (!result.data) {
+      return [];
+    }
+
+    decksCache = result.data;
+    return result.data;
   } catch (error) {
     console.error('Error fetching decks:', error);
-    throw error; // Let the component handle the error
+    return [];
   }
 };
 
@@ -62,8 +71,9 @@ export const getDeckById = async (id: string): Promise<FlashcardDeck | undefined
   return decks.find(deck => deck.id === id);
 };
 
-export const getRandomDeck = async (): Promise<FlashcardDeck> => {
+export const getRandomDeck = async (): Promise<FlashcardDeck | undefined> => {
   const decks = await getAllDecks();
+  if (decks.length === 0) return undefined;
   const randomIndex = Math.floor(Math.random() * decks.length);
   return decks[randomIndex];
 };
