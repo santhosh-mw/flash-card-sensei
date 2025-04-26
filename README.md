@@ -1,86 +1,88 @@
 # 🚀 Flash Cards Sensei - The Force of Learning
 
-> "Do. Or do not. There is no try." - Master Yoda on learning
+> "Do. Or do not. There is no try." – Master Yoda
 
-Welcome to Flash Cards Sensei, a powerful learning tool that harnesses the Force of knowledge! This Next.js application is your personal Jedi training ground for mastering new languages and concepts.
-
-## 🌌 The Force Awakens
-
-In a galaxy not so far away, we've created an interactive flashcard system that makes learning as smooth as a lightsaber through butter. Our mission: to help padawans (learners) master new languages through an engaging, animated experience.
-
-## ⚔️ Core Features
-
-### 1. The Jedi Archives (Flashcard Display)
-- A single flashcard appears like a hologram from your datapad
-- Each card contains a question in the target language
-- Multiple-choice options appear like star systems on a galactic map
-- The Force ensures options are randomized for each viewing
-
-### 2. Lightsaber Combat (Interaction)
-- Select your answer with the precision of a Jedi
-- Immediate visual feedback like a lightsaber clash
-- The "Reveal Answer" button acts as your Force vision
-- Correct answers glow green like a Jedi's lightsaber
-- Incorrect answers flash red like a Sith's blade
-
-### 3. Hyperdrive Navigation
-- "Next" and "Previous" buttons guide you through the galaxy of knowledge
-- Smooth transitions like a starship entering hyperspace
-
-### 4. Force Powers (Animations)
-- Card transitions smoother than a podracer
-- Answer reveals with the drama of a lightsaber duel
-- Feedback animations worthy of the Jedi Council
-
-## 🛸 Technology Stack
-
-Our starship is built with the finest technology in the galaxy:
-
-- **Framework:** Next.js (The Millennium Falcon of web frameworks)
-- **Language:** TypeScript (The protocol droid that keeps everything in order)
-- **Styling:** Tailwind CSS (The astromech droid that handles all the styling)
-- **Animation:** Framer Motion (The Force that brings everything to life)
-- **State Management:** React's built-in hooks (The Jedi mind trick of state management)
-
-## 📜 Jedi Archives (Data Structure)
-
-```typescript
-interface Flashcard {
-  id: number;          // Your personal holocron identifier
-  question: string;    // The knowledge you seek
-  options: string[];   // Possible paths to wisdom
-  correctAnswer: string; // The way of the Force
-  language?: string;   // The dialect of the galaxy
-}
-
-// Example from the Jedi Archives
-const flashcards: Flashcard[] = [
-  { 
-    id: 1, 
-    question: 'Hola', 
-    options: ['Hello', 'Goodbye', 'Thank you', 'Yes'], 
-    correctAnswer: 'Hello', 
-    language: 'Spanish' 
-  },
-  // More knowledge awaits...
-];
-```
-
-## 🚀 Deployment
-
-To launch this starship to the galaxy (deploy to Vercel):
-
-1. Clone this repository to your local system
-2. Install dependencies with `npm install`
-3. Run the development server with `npm run dev`
-4. May the Force be with you as you learn!
-
-## 📞 Contact
-
-Need to reach the Jedi Council? Open an issue in this repository, and we'll respond with the wisdom of the Force.
+Welcome to **Flash Cards Sensei** – your interactive, AI-powered flashcard platform for mastering any topic, language, or subject. Built with Next.js 14, TypeScript, and OpenAI, this app brings the power of generative AI and beautiful UI/UX to your learning journey.
 
 ---
 
-> "The greatest teacher, failure is." - Master Yoda
+## 🚀 Features
+
+### ✨ AI-Powered Flashcard Generator
+- **Instantly generate custom flashcard decks** on any topic using OpenAI.
+- **Full customization:**
+  - **Number of cards:** Choose how many cards to generate (default: 5).
+  - **Card Type:** Multiple Choice, True/False, or Fill in the Blank.
+  - **Difficulty:** Easy, Medium, or Hard.
+  - **Language:** English, Spanish, or French.
+  - **Category/Subject:** Any Subject, Geography, Science, History, Math, or Literature.
+- **Interactive Decks:** Play through generated cards with answer selection, navigation, and animated feedback.
+- **Game Stats:** Track your score, accuracy, and completed cards for every AI-generated deck.
+
+#### Example: Customization UI
+
+![AI Flashcard Generator Customization UI](./docs/ai-flashcard-generator-customization.png)
+
+*Above: The AI-powered flashcard generator with options for number of cards, card type, difficulty, language, and category.*
+
+Try it live: [https://flash-card-sensei-git-main-santhosh-thiyagarajans-projects.vercel.app/](https://flash-card-sensei-git-main-santhosh-thiyagarajans-projects.vercel.app/)
+
+---
+
+### 🧑‍🎓 Classic & AI Decks
+- **Built-in decks:** Geography, Languages, Programming, and more.
+- **AI decks:** Instantly create new decks on any topic, with your chosen settings.
+- **Interactive experience:** Animated cards, answer feedback, and smooth navigation.
+
+### 📊 Game Stats & Achievements
+- **Score:** Earn points for correct answers.
+- **Accuracy:** See your percentage of correct answers.
+- **Cards Completed:** Track your progress through each deck.
+
+---
+
+## 🛠️ Tech Stack
+- **Framework:** Next.js 14 (App Router, Suspense, Edge API routes)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animation:** Framer Motion
+- **AI:** OpenAI GPT-3.5 Turbo
+
+---
+
+## 🚦 Getting Started
+
+1. **Clone the repo:**
+   ```bash
+   git clone <repo-url>
+   cd flash-cards-sensei
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Add your OpenAI API key:**
+   - Create a `.env.local` file:
+     ```env
+     OPENAI_API_KEY=sk-...
+     ```
+4. **Run the dev server:**
+   ```bash
+   npm run dev
+   ```
+5. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
+
+---
+
+## 📦 Deployment
+- **Production-ready:** Deploy to Vercel or your favorite platform.
+- **Next.js 14 compliant:** Uses Suspense boundaries and client/server component best practices.
+
+---
+
+## 📞 Contact & Feedback
+- Open an issue or PR for questions, suggestions, or contributions.
+
+> "The greatest teacher, failure is." – Master Yoda
 
 May the Force of learning be with you! 🌟
