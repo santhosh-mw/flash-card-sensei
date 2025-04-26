@@ -32,9 +32,6 @@ export const getAllDecks = async (): Promise<FlashcardDeck[]> => {
 
   try {
     const response = await fetch(`${getBaseUrl()}/api/decks`, {
-      // Prevent caching in development
-      cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
-      // Add next revalidate for production
       next: { revalidate: 60 } // Revalidate every minute
     });
 
