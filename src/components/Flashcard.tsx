@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flashcard as FlashcardType } from '@/types/flashcard';
 
@@ -13,6 +13,21 @@ interface FlashcardProps {
 export default function Flashcard({ card, onNext, onPrevious }: FlashcardProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
+
+  // Add effect to handle automatic advancement
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (isRevealed) {
+      timeoutId = setTimeout(() => {
+        handleNext();
+      }, 1500); // Wait 1.5 seconds before advancing
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isRevealed]);
 
   const handleOptionClick = (option: string) => {
     if (isRevealed) return;
@@ -38,19 +53,19 @@ export default function Flashcard({ card, onNext, onPrevious }: FlashcardProps) 
   const getOptionStyle = (option: string) => {
     if (!isRevealed) {
       return selectedOption === option
-        ? 'bg-indigo-600 text-white'
-        : 'bg-white/10 text-white hover:bg-white/20';
+        ? 'bg-jedi-blue text-starwars-yellow lightsaber-glow'
+        : 'bg-black/30 text-starwars-light hover:bg-black/40 force-hover';
     }
 
     if (option === card.correctAnswer) {
-      return 'bg-green-500 text-white';
+      return 'bg-black/30 text-starwars-light answer-correct';
     }
 
     if (selectedOption === option && option !== card.correctAnswer) {
-      return 'bg-red-500 text-white';
+      return 'bg-black/30 text-starwars-light answer-wrong';
     }
 
-    return 'bg-white/10 text-white';
+    return 'bg-black/30 text-starwars-light opacity-50';
   };
 
   return (
@@ -58,42 +73,57 @@ export default function Flashcard({ card, onNext, onPrevious }: FlashcardProps) 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg p-8"
+      className="star-wars-card hologram"
     >
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4">Question</h2>
-        <p className="text-xl text-white">{card.question}</p>
+        <motion.h2 
+          className="text-2xl font-bold text-starwars-yellow star-wars-text mb-4"
+          animate={{ textShadow: ['0 0 10px rgba(255,232,31,0.5)', '0 0 20px rgba(255,232,31,0.8)', '0 0 10px rgba(255,232,31,0.5)'] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          Question
+        </motion.h2>
+        <p className="text-xl text-starwars-light">{card.question}</p>
       </div>
 
       <div className="space-y-4 mb-8">
         {card.options.map((option, index) => (
-          <button
+          <motion.button
             key={index}
             onClick={() => handleOptionClick(option)}
-            className={`w-full p-4 rounded-xl transition-colors ${getOptionStyle(option)}`}
+            className={`w-full p-4 rounded-xl transition-all duration-300 ${getOptionStyle(option)}`}
             disabled={isRevealed}
+            whileHover={{ scale: isRevealed ? 1 : 1.02, x: isRevealed ? 0 : 5 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: index * 0.1 }}
           >
             {option}
-          </button>
+          </motion.button>
         ))}
       </div>
 
       <div className="flex justify-between">
         {onPrevious && (
-          <button
+          <motion.button
             onClick={handlePrevious}
-            className="px-6 py-3 bg-white/20 text-white rounded-xl hover:bg-white/30 transition-colors"
+            className="star-wars-button"
+            whileHover={{ scale: 1.05, x: -5 }}
+            whileTap={{ scale: 0.95 }}
           >
             Previous
-          </button>
+          </motion.button>
         )}
-        <button
+        <motion.button
           onClick={handleNext}
           disabled={!selectedOption}
-          className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="hidden star-wars-button disabled:opacity-50 disabled:cursor-not-allowed"
+          whileHover={{ scale: !selectedOption ? 1 : 1.05, x: 5 }}
+          whileTap={{ scale: !selectedOption ? 1 : 0.95 }}
         >
           Next
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   );

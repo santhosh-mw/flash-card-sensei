@@ -30,7 +30,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-8">
+    <main className="min-h-screen space-background p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <Link

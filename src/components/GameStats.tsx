@@ -11,49 +11,67 @@ export default function GameStats() {
     <div className="w-full max-w-2xl mx-auto mb-8">
       {/* Stats Grid */}
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-blue-500">{score}</div>
-          <div className="text-sm text-gray-600">Score</div>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-orange-500">
+        <motion.div 
+          className="star-wars-card"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="text-2xl font-bold text-starwars-yellow">{score}</div>
+          <div className="text-sm text-starwars-light">Score</div>
+        </motion.div>
+        <motion.div 
+          className="star-wars-card"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="text-2xl font-bold text-jedi-gold">
             {streak}
-            {streak > 0 && <span className="ml-1">🔥</span>}
+            {streak > 0 && <span className="ml-1">⚡</span>}
           </div>
-          <div className="text-sm text-gray-600">Streak</div>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-green-500">
+          <div className="text-sm text-starwars-light">Streak</div>
+        </motion.div>
+        <motion.div 
+          className="star-wars-card"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="text-2xl font-bold text-jedi-green">
             {totalAnswered > 0
               ? Math.round((correctAnswers / totalAnswered) * 100)
               : 0}
             %
           </div>
-          <div className="text-sm text-gray-600">Accuracy</div>
-        </div>
+          <div className="text-sm text-starwars-light">Accuracy</div>
+        </motion.div>
       </div>
 
       {/* Achievements */}
-      <div className="bg-white rounded-xl p-4 shadow-sm">
-        <h3 className="text-lg font-semibold mb-3 text-gray-800">Achievements</h3>
+      <motion.div 
+        className="star-wars-card"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <h3 className="text-lg font-bold mb-3 text-starwars-yellow star-wars-text">Achievements</h3>
         <div className="grid grid-cols-3 gap-3">
           {achievements.map((achievement) => (
-            <div
+            <motion.div
               key={achievement.id}
               className={`p-3 rounded-lg text-center transition-all ${
                 achievement.unlocked
-                  ? 'bg-yellow-50 border-2 border-yellow-200'
-                  : 'bg-gray-50 border-2 border-gray-200 opacity-50'
+                  ? 'bg-jedi-blue/30 border-2 border-starwars-yellow'
+                  : 'bg-black/30 border-2 border-starwars-gray opacity-50'
               }`}
+              whileHover={{ scale: achievement.unlocked ? 1.05 : 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="text-2xl mb-1">{achievement.icon}</div>
-              <div className="font-medium text-sm">
+              <div className="font-medium text-sm text-starwars-light">
                 {achievement.title}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Answer Feedback */}
       <AnimatePresence>
@@ -64,11 +82,11 @@ export default function GameStats() {
             exit={{ opacity: 0, y: -20 }}
             className={`mt-4 p-4 rounded-xl text-center font-medium ${
               lastAnswerCorrect
-                ? 'bg-green-50 text-green-600'
-                : 'bg-red-50 text-red-600'
+                ? 'bg-jedi-green/20 text-jedi-green border border-jedi-green'
+                : 'bg-jedi-red/20 text-jedi-red border border-jedi-red'
             }`}
           >
-            {lastAnswerCorrect ? '🎉 Correct!' : '😔 Try again!'}
+            {lastAnswerCorrect ? '✨ The Force is strong with this one!' : '💫 Trust in the Force, try again!'}
           </motion.div>
         )}
       </AnimatePresence>

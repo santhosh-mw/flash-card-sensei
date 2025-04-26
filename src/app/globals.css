@@ -2,10 +2,318 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Star Jedi';
+  src: url('/fonts/Starjedi.ttf') format('truetype');
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 10, 30;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.space-background {
+  position: relative;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+
+.space-background::before,
+.space-background::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.space-background::before {
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: stars-small 50s linear infinite;
+  opacity: 0.5;
+}
+
+.space-background::after {
+  background-image: 
+    radial-gradient(3px 3px at 50px 60px, #fff, rgba(0,0,0,0)),
+    radial-gradient(3px 3px at 90px 120px, #fff, rgba(0,0,0,0)),
+    radial-gradient(3px 3px at 130px 160px, #fff, rgba(0,0,0,0)),
+    radial-gradient(3px 3px at 170px 80px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 400px 400px;
+  animation: stars-big 100s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes stars-small {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-200px);
+  }
+}
+
+@keyframes stars-big {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-400px);
+  }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 4px);
+  background-size: 50px 50px;
+  animation: stars 20s linear infinite;
+  z-index: -1;
+}
+
+@keyframes stars {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Star Wars Background Effects */
+.space-background {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  background-attachment: fixed;
+}
+
+/* Lightsaber glow effect */
+.lightsaber-glow {
+  position: relative;
+}
+
+.lightsaber-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 20px rgba(255, 232, 31, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightsaber-glow:hover::before {
+  opacity: 1;
+}
+
+/* Star Wars text effect */
+.star-wars-text {
+  font-family: 'Star Jedi', sans-serif;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+  text-shadow: 0 0 10px rgba(255, 232, 31, 0.5);
+}
+
+/* Hologram effect */
+.hologram {
+  position: relative;
+  overflow: hidden;
+}
+
+.hologram::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.1) 0px,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  animation: hologram-scan 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes hologram-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Force hover effect */
+.force-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.force-hover:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 
+    0 0 15px rgba(255, 232, 31, 0.3),
+    0 0 30px rgba(255, 232, 31, 0.2);
+}
+
+/* Star Wars button */
+.star-wars-button {
+  @apply px-4 py-2 rounded-lg transition-all duration-300;
+  background: linear-gradient(45deg, #1a4b84, #090a0f);
+  border: 1px solid #ffe81f;
+  color: #ffe81f;
+  position: relative;
+  overflow: hidden;
+}
+
+.star-wars-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 232, 31, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: lightsaber-flash 2s infinite;
+}
+
+@keyframes lightsaber-flash {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* Star Wars card */
+.star-wars-card {
+  @apply rounded-lg p-6 transition-all duration-300;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #ffe81f;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.star-wars-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 232, 31, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.star-wars-card:hover::before {
+  transform: translateX(100%);
+}
+
+/* Star Wars input */
+.star-wars-input {
+  @apply px-4 py-2 rounded-lg bg-black/50 border border-[#ffe81f] text-white;
+  transition: all 0.3s ease;
+}
+
+.star-wars-input:focus {
+  outline: none;
+  border-color: #ffe81f;
+  box-shadow: 0 0 10px rgba(255, 232, 31, 0.5);
+}
+
+/* Stars animation */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+}
+
+/* Lightsaber loading bar */
+.lightsaber-progress {
+  height: 4px;
+  background: rgba(255, 232, 31, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.lightsaber-progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #ffe81f;
+  box-shadow: 0 0 10px #ffe81f;
+  animation: lightsaber-load 2s ease-in-out infinite;
+}
+
+@keyframes lightsaber-load {
+  0% { width: 0; }
+  100% { width: 100%; }
 }
 
 @layer base {
@@ -72,4 +380,45 @@ button:focus-visible {
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Answer selection animations */
+@keyframes correct-answer {
+  0% {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+  }
+  50% {
+    background: rgba(0, 255, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  }
+  100% {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+  }
+}
+
+@keyframes wrong-answer {
+  0% {
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+  }
+  50% {
+    background: rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+  }
+  100% {
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+  }
+}
+
+.answer-correct {
+  animation: correct-answer 1s ease-in-out;
+  border-color: rgba(0, 255, 0, 0.5) !important;
+}
+
+.answer-wrong {
+  animation: wrong-answer 1s ease-in-out;
+  border-color: rgba(255, 0, 0, 0.5) !important;
 }

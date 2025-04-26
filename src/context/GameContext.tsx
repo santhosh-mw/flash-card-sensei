@@ -15,6 +15,7 @@ interface Achievement {
   id: string;
   title: string;
   description: string;
+  icon: string;
   unlocked: boolean;
 }
 
@@ -35,18 +36,21 @@ const initialGameState: GameState = {
       id: 'first_correct',
       title: 'First Step',
       description: 'Answer your first question correctly',
+      icon: '🌟',
       unlocked: false,
     },
     {
       id: 'streak_3',
       title: 'Hot Streak',
       description: 'Get 3 correct answers in a row',
+      icon: '⚡',
       unlocked: false,
     },
     {
       id: 'perfect_score',
       title: 'Perfect Score',
       description: 'Get all answers correct in a deck',
+      icon: '✨',
       unlocked: false,
     },
   ],

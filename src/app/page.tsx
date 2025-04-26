@@ -14,11 +14,8 @@ export default async function Home() {
   const categories = Array.from(new Set(decks.map(deck => deck.category)));
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-8">
+    <main className="min-h-screen space-background p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">
-          LinguaFlash
-        </h1>
 
         {categories.length === 0 ? (
           <div className="text-center text-white">

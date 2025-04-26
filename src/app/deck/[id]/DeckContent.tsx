@@ -74,17 +74,17 @@ export default function DeckContent({ deck }: DeckContentProps) {
     : 0;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-8">
+    <main className="min-h-screen space-background p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-6">
               <Link
-                href={`/categories/${deck.category}`}
+                href={`/categories/${deck.id.split('-')[0]}`}
                 className="text-white hover:text-indigo-200 transition-colors flex items-center gap-2"
               >
-                <span>← Back to {deck.category}</span>
+                <span>← Back to {deck.id.split('-')[0]}</span>
               </Link>
               <div className="text-white">
                 {remainingCards} cards remaining
@@ -138,7 +138,7 @@ export default function DeckContent({ deck }: DeckContentProps) {
                     Try Again
                   </button>
                   <Link
-                    href={`/categories/${deck.category}`}
+                    href={`/categories/${deck.id.split('-')[0]}`}
                     className="px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-colors"
                   >
                     Choose Another Deck
