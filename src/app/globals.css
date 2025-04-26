@@ -258,7 +258,7 @@ body::before {
 
 /* Star Wars input */
 .star-wars-input {
-  @apply px-4 py-2 rounded-lg bg-black/50 border border-[#ffe81f] text-white;
+  @apply px-4 py-2 rounded-lg bg-black/50 border border-starwars-yellow text-white;
   transition: all 0.3s ease;
 }
 

@@ -8,6 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'starwars-yellow': '#FFE81F',
+        'starwars-light': '#FFFFFF',
+        'jedi-blue': '#2E67F8',
+        'jedi-gold': '#FFE81F',
+        'jedi-red': '#FF5757',
+        'jedi-green': '#4CAF50',
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',

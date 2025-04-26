@@ -12,17 +12,18 @@ export interface FlashcardDeck {
 let decksCache: FlashcardDeck[] | null = null;
 
 const getBaseUrl = () => {
-  if (typeof window !== 'undefined') {
-    // Browser should use relative path
-    return '';
-  }
-  
-  // Server should use absolute URL
+  // During build time, we should use the absolute URL
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
-  
-  return `http://localhost:${process.env.PORT || 3000}`;
+
+  // For local development
+  if (process.env.NODE_ENV === 'development') {
+    return `http://localhost:${process.env.PORT || 3000}`;
+  }
+
+  // Fallback to relative URL for client-side requests
+  return '';
 };
 
 export const getAllDecks = async (): Promise<FlashcardDeck[]> => {
