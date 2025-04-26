@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { getAllDecks } from '@/data';
 import { FlashcardDeck } from '@/data';
+import PromptFlashcardGenerator from '@/components/PromptFlashcardGenerator';
 
 // Force dynamic rendering for development
 export const dynamic = 'force-dynamic';
@@ -37,10 +38,7 @@ export default function Home() {
   return (
     <main className="min-h-screen space-background p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-starwars-yellow star-wars-text mb-8 text-center">
-          LinguaFlash
-        </h1>
-
+        <PromptFlashcardGenerator />
         {loading ? (
           <div className="text-center text-white">
             <p>Loading flashcard decks...</p>
