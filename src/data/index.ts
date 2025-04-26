@@ -33,19 +33,27 @@ export const getAllDecks = async (): Promise<FlashcardDeck[]> => {
 
   try {
     const response = await fetch(`${getBaseUrl()}/api/decks`, {
-      next: { revalidate: 60 } // Revalidate every minute
+      next: { revalidate: 0 } // Disable caching for now to debug
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch decks');
+      const error = await response.json();
+      console.error('API Error:', error);
+      throw new Error(error.error || 'Failed to fetch decks');
     }
 
     const decks = await response.json();
+    
+    if (!Array.isArray(decks)) {
+      console.error('Invalid response format:', decks);
+      throw new Error('Invalid deck data received');
+    }
+
     decksCache = decks;
     return decks;
   } catch (error) {
     console.error('Error fetching decks:', error);
-    return [];
+    throw error; // Let the component handle the error
   }
 };
 

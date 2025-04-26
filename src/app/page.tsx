@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { getAllDecks } from '@/data';
@@ -9,15 +10,46 @@ import { FlashcardDeck } from '@/data';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function Home() {
-  const decks = await getAllDecks();
+export default function Home() {
+  const [decks, setDecks] = useState<FlashcardDeck[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDecks = async () => {
+      try {
+        const fetchedDecks = await getAllDecks();
+        setDecks(fetchedDecks);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching decks:', err);
+        setError('Failed to load flashcard decks. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDecks();
+  }, []);
+
   const categories = Array.from(new Set(decks.map(deck => deck.category)));
 
   return (
     <main className="min-h-screen space-background p-8">
       <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-bold text-starwars-yellow star-wars-text mb-8 text-center">
+          LinguaFlash
+        </h1>
 
-        {categories.length === 0 ? (
+        {loading ? (
+          <div className="text-center text-white">
+            <p>Loading flashcard decks...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center text-white">
+            <p>{error}</p>
+          </div>
+        ) : categories.length === 0 ? (
           <div className="text-center text-white">
             <p>No flashcard decks found. Please add some flashcards to get started!</p>
           </div>
@@ -34,17 +66,17 @@ export default async function Home() {
                     <Link
                       key={deck.id}
                       href={`/deck/${deck.id}`}
-                      className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+                      className="star-wars-card force-hover"
                     >
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      <h3 className="text-xl font-semibold text-starwars-yellow mb-2">
                         {deck.title}
                       </h3>
-                      <p className="text-gray-600">{deck.description}</p>
+                      <p className="text-starwars-light">{deck.description}</p>
                       <div className="mt-4 flex justify-between items-center">
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-starwars-light">
                           {deck.cards.length} cards
                         </span>
-                        <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">
+                        <span className="px-3 py-1 bg-black/30 text-starwars-yellow rounded-full text-sm border border-starwars-yellow">
                           {deck.language}
                         </span>
                       </div>
